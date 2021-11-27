@@ -1,11 +1,14 @@
 const cors = require("cors");
 const express = require("express");
 const app = express();
-const URLs = "https://tinnys.herokuapp.com/u/";
-// const URLs="http://localhost:3002/u/";
-const URLs2 = "https://tinnys.herokuapp.com";
-// const URLs2="http://localhost:3002";
-app.use(cors());
+// const URLs = "https://tinnys.herokuapp.com/u/";
+const URLs="http://localhost:3002/u/";
+// const URLs2 = "https://tinnys.herokuapp.com";
+const URLs2="http://localhost:3002";
+app.use(cors({
+    origin:"http://localhost:3001",
+    credentials:true,
+}));
 app.use(express.json());
 const mongoose = require("mongoose");
 const conn_url =
