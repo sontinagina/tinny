@@ -6,7 +6,8 @@ app.use(
  );
  app.use(express.json());
  const mongoose = require("mongoose");
- const conn_url="mongodb+srv://ramsonti:ram.sonti@tinny.bajlt.mongodb.net/myFirstDatabase?retryWrites=true&w=majority";
+ const conn_url =
+    "mongodb+srv://sontinagina:sontinagina@tiny-cluster.rfz2z.mongodb.net/Tiny-URLs?retryWrites=true&w=majority";
  const db = mongoose.createConnection(conn_url, {
     useNewUrlParser: true,
     useUnifiedTopology: true,
