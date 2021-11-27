@@ -35,71 +35,82 @@ const generateUniqueKey=function(){
     console.log(str);
     return str;
 }
- app.post("/getUrl",async (req,res)=>{
-     const {url}=req.body;
-     if(url===undefined||url===null){
-        res.send({url:"Invalid url"});
-    }else{
-        const curr_url = await user.find({
-            url
-         },{newUrl:1,_id:0});
-         if(curr_url[0]!==null && curr_url[0]!=undefined){
-            res.send({url:curr_url[0].newUrl});
-         }else{
-            let hashcode=null;
-            let isUnique=false;
-            while(!isUnique){
-                hashcode=await generateUniqueKey();
-                const curr_hashcode = await user.find({
-                    hashcode
-                 },{_id:1});
-                 console.log(curr_hashcode)
-                 if(curr_hashcode[0]===null || 
-                    curr_hashcode[0]===undefined || curr_hashcode[0]==="" ||curr_hashcode[0]==[] ){
-                    isUnique=true;
-                    break;
-                 }
-            }
-            // let newGenUrl=req.protocol+"://"+req.hostname+":"+3000+"/"+hashcode;
-            let newGenUrl="https://tnny.herokuapp.com/u/"+hashcode;
-            console.log("new gen url:: ",newGenUrl);
-             const newUser = new user({
-                url,
-                newUrl:newGenUrl,
-                hashcode:hashcode,
-                createdDateTime:new Date().toLocaleString(),
-             });
-             await newUser.save();
-             res.send({url:newGenUrl});
-         }
+ app.post("/getUrl", async (req, res) => {
+    const { url } = req.body;
+    if (url === undefined || url === null) {
+       res.send({ url: "Invalid url" });
+    } else {
+       const curr_url = await user.find(
+          {
+             url,
+          },
+          { newUrl: 1, _id: 0 }
+       );
+       if (curr_url[0] !== null && curr_url[0] != undefined) {
+          res.send({ url: curr_url[0].newUrl });
+       } else {
+          let hashcode = null;
+          let isUnique = false;
+          while (!isUnique) {
+             hashcode = await generateUniqueKey();
+             const curr_hashcode = await user.find(
+                {
+                   hashcode,
+                },
+                { _id: 1 }
+             );
+             console.log(curr_hashcode);
+             if (
+                curr_hashcode[0] === null ||
+                curr_hashcode[0] === undefined ||
+                curr_hashcode[0] === "" ||
+                curr_hashcode[0] == []
+             ) {
+                isUnique = true;
+                break;
+             }
+          }
+          // let newGenUrl=req.protocol+"://"+req.hostname+":"+3000+"/"+hashcode;
+          let newGenUrl = "https://tinnys.herokuapp.com/u/" + hashcode;
+          console.log("new gen url:: ", newGenUrl);
+          const newUser = new user({
+             url,
+             newUrl: newGenUrl,
+             hashcode: hashcode,
+             createdDateTime: new Date().toLocaleString(),
+          });
+          await newUser.save();
+          res.send({ url: newGenUrl });
+       }
     }
- })
- 
-app.get("*/u/*",async (req,res)=>{
+ });
+
+ app.get("*/u/*", async (req, res) => {
     console.log("server is heated");
-    const newUrl="https://tnny.herokuapp.com"+req.originalUrl;
+    const newUrl = "https://tinnys.herokuapp.com/" + req.originalUrl;
     console.log(req.originalUrl);
-    
-    if(req.originalUrl===undefined||req.originalUrl===null){
-        res.send({url:"Invalid url"});
-    }else{
-    const curr_url = await user.find({
-        newUrl
-     },{url:1,_id:0});
-     if(curr_url[0]!==null && curr_url[0]!=undefined){
-         console.log(curr_url)
-        res.writeHead(301,{"Location":curr_url[0].url})
-        res.end();
-     }else{
-         res.send({url:"not found"});
-     }
-    // res.send("server is working fine");
+
+    if (req.originalUrl === undefined || req.originalUrl === null) {
+       res.send({ url: "Invalid url" });
+    } else {
+       const curr_url = await user.find(
+          {
+             newUrl,
+          },
+          { url: 1, _id: 0 }
+       );
+       if (curr_url[0] !== null && curr_url[0] != undefined) {
+          console.log(curr_url);
+          res.writeHead(301, { Location: curr_url[0].url });
+          res.end();
+       } else {
+          res.send({ url: "not found" });
+       }
+       // res.send("server is working fine");
     }
-})
+ });
 
-
-
- app.listen(process.env.PORT || 3000);
+ app.listen(process.env.PORT || 3002);
 //  app.listen(3000,()=>{
 //      console.log("server started.........");
 //  });
