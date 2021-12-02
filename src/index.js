@@ -5,17 +5,22 @@ const URLs = "https://tinnys.herokuapp.com/u/";
 // const URLs="http://localhost:3002/u/";
 const URLs2 = "https://tinnys.herokuapp.com";
 // const URLs2="http://localhost:3002";
-app.use(cors({
-    origin:"http://localhost:3001",
-    credentials:true,
-}));
+app.use(
+   cors({
+      origin: ["https://tinny-urls.herokuapp.com/", "http://localhost:3001"],
+      credentials: true,
+   })
+);
 app.use(express.json());
+
 const mongoose = require("mongoose");
 const conn_url =
    "mongodb+srv://sontinagina:sontinagina@tiny-cluster.rfz2z.mongodb.net/Tiny-URLs?retryWrites=true&w=majority";
 const db = mongoose.createConnection(conn_url, {
    useNewUrlParser: true,
    useUnifiedTopology: true,
+   useCreateIndex: true,
+   useFindAndModify: false,
 });
 const userSchema = new mongoose.Schema({
    url: String,
