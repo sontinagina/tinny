@@ -105,7 +105,7 @@ app.post("/getUrl", async (req, res) => {
    }
 });
 
-app.get("/u/", async (req, res) => {
+app.get("*/u/*", async (req, res) => {
    console.log("server is heated");
    const newUrl = URLs2 + req.originalUrl;
    console.log(req.originalUrl);
