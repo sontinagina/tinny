@@ -1,17 +1,23 @@
 const cors = require("cors");
 const express = require("express");
 const app = express();
+const cookieParser = require("cookie-parser");
 const URLs = "https://tinnys.herokuapp.com/u/";
-// const URLs="http://localhost:3002/u/";
+// const URLs = "http://localhost:3002/u/";
 const URLs2 = "https://tinnys.herokuapp.com";
-// const URLs2="http://localhost:3002";
+// const URLs2 = "http://localhost:3002";
 app.use(
    cors({
-      origin: ["https://tinny-urls.herokuapp.com/", "http://localhost:3001"],
+      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: true,
+      origin: ["https://tinny-urls.herokuapp.com", "http://localhost:3000"],
    })
 );
 app.use(express.json());
+app.use(cookieParser());
+app.use(express.json({ limit: "40mb", extended: true }));
+app.use(express.urlencoded({ limit: "40mb", extended: true }));
+app.set("trust proxy", 1);
 
 const mongoose = require("mongoose");
 const conn_url =
@@ -19,8 +25,8 @@ const conn_url =
 const db = mongoose.createConnection(conn_url, {
    useNewUrlParser: true,
    useUnifiedTopology: true,
-   useCreateIndex: true,
-   useFindAndModify: false,
+   // useCreateIndex: true,
+   // useFindAndModify: false,
 });
 const userSchema = new mongoose.Schema({
    url: String,
@@ -124,9 +130,7 @@ app.get("*/u/*", async (req, res) => {
    }
 });
 
-
-
- app.listen(process.env.PORT || 3002);
+app.listen(process.env.PORT || 3002);
 //  app.listen(3000,()=>{
 //      console.log("server started.........");
 //  });
