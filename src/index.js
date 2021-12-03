@@ -6,12 +6,15 @@ const URLs = "https://tinnys.herokuapp.com/u/";
 // const URLs = "http://localhost:3002/u/";
 const URLs2 = "https://tinnys.herokuapp.com";
 // const URLs2 = "http://localhost:3002";
+// app.use(
+//    cors({
+//       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
+//       credentials: false,
+//       origin: ["https://tinny-urls.herokuapp.com/", "http://localhost:3000/"],
+//    })
+// );
 app.use(
-   cors({
-      methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: false,
-      origin: ["https://tinny-urls.herokuapp.com/", "http://localhost:3000/"],
-   })
+   cors()
 );
 app.use(express.json());
 app.use(cookieParser());
