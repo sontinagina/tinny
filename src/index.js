@@ -10,7 +10,7 @@ app.use(
    cors({
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
       credentials: false,
-      origin: ["https://tinny-urls.herokuapp.com", "http://localhost:3000"],
+      origin: ["https://tinny-urls.herokuapp.com/", "http://localhost:3000/"],
    })
 );
 app.use(express.json());
