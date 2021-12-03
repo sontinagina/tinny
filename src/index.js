@@ -9,7 +9,7 @@ const URLs2 = "https://tinnys.herokuapp.com";
 app.use(
    cors({
       methods: "GET,HEAD,PUT,PATCH,POST,DELETE",
-      credentials: true,
+      credentials: false,
       origin: ["https://tinny-urls.herokuapp.com", "http://localhost:3000"],
    })
 );
@@ -55,7 +55,7 @@ const generateUniqueKey = function () {
    console.log(str);
    return str;
 };
-app.post("getUrl", async (req, res) => {
+app.post("/getUrl", async (req, res) => {
    const { url } = req.body;
    if (url === undefined || url === null) {
       res.send({ url: "Invalid url" });
