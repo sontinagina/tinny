@@ -55,7 +55,7 @@ const generateUniqueKey = function () {
    console.log(str);
    return str;
 };
-app.post("/getUrl", async (req, res) => {
+app.post("getUrl", async (req, res) => {
    const { url } = req.body;
    if (url === undefined || url === null) {
       res.send({ url: "Invalid url" });
